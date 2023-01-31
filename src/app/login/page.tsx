@@ -1,20 +1,19 @@
-'use client'
+"use client";
 
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-
-  const router = useRouter()
-  const submitForm = async (e:any) => {
+  const router = useRouter();
+  const submitForm = async (e: any) => {
     e.preventDefault();
     const sign = await signIn("credentials", {
       redirect: false,
-      email:"jsmith@example.com",
-      password: "password"
+      email: "jsmith@example.com",
+      password: "password",
     });
-    if(sign){
-      router.push('/')
+    if (sign) {
+      router.push("/");
     }
   };
   return (
@@ -55,7 +54,7 @@ export default function LoginPage() {
                 id="emailHelp"
                 className="block mt-1 text-xs text-gray-600"
               >
-                We'll never share your email with anyone else.
+                {"We'll never share your email with anyone else."}
               </small>
             </div>
             <div className="form-group mb-6">

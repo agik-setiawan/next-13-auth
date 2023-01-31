@@ -7,10 +7,8 @@ import { SessionProvider } from "next-auth/react";
 
 export default function RootLayout({
   children,
-  session,
 }: {
   children: React.ReactNode;
-  session: any;
 }) {
   return (
     <html lang="en">
@@ -20,7 +18,7 @@ export default function RootLayout({
       */}
       <head />
       <body>
-        <SessionProvider session={session}>
+        <SessionProvider>
           <Navbar />
           <main className="py-16">{children}</main>
           <Footer />
