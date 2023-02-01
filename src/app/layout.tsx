@@ -4,6 +4,9 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import ClientProvider from "@/components/ClientProvider";
 
 export default function RootLayout({
   children,
@@ -12,17 +15,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
       <head />
       <body>
-        <SessionProvider>
+        <ClientProvider>
           <Navbar />
           <main className="py-16">{children}</main>
-          <Footer />
-        </SessionProvider>
+        </ClientProvider>
       </body>
     </html>
   );
