@@ -1,10 +1,14 @@
+import { use } from "react";
 import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "./page.module.css";
+import { getSession } from "next-auth/react";
+import Profile from "@/components/Profile";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default async function Home(props:any) {
+  
   return (
     <main>
       <div className={styles.center}>
@@ -19,6 +23,10 @@ export default function Home() {
         <div className={styles.thirteen}>
           <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
         </div>
+      </div>
+
+      <div className="text-center">
+        <Profile/>
       </div>
 
       <div className={styles.grid}>

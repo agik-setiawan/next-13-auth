@@ -26,8 +26,12 @@ import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
+import axios from 'axios';
+import { api } from "@/config/api";
+import { omit } from "lodash";
 
 export default function RegisterPage() {
+  const router = useRouter();
   const schema = yup.object().shape({
     email: yup.string().email().required(),
     password: yup.string().min(5).required(),
@@ -61,6 +65,11 @@ export default function RegisterPage() {
 
   const onSubmit = (values: any) => {
     setIsFetching(true);
+    axios.post(api.api_url+'/auth/register',{
+      ...omit(values,['confirm_password'])
+    }).then((res)=>{
+      router.replace('/login')
+    })
     setAuthError("");
   };
   const avatars = [

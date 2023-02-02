@@ -1,3 +1,5 @@
+import { api } from "@/config/api";
+import axios from "axios";
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -16,23 +18,20 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        // Add logic here to look up the user from the credentials supplied
-        const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
         const { email, password }: any = req.body;
 
         if (email && password) {
-          return user;
-          // const fetchUser = await axios.post(api.api_url + "/user/auth/login", {
-          //   email,
-          //   password,
-          // });
-          // if (fetchUser) {
-          //   if (fetchUser.data.data) {
-          //     if (fetchUser.data.data.user) {
-          //       return fetchUser.data.data.user;
-          //     }
-          //   }
-          // }
+          const fetchUser = await axios.post(api.api_url + "/auth/login", {
+            email,
+            password,
+          });
+          if (fetchUser) {
+            if (fetchUser.data) {
+              if (fetchUser.data.user) {
+                return fetchUser.data.user;
+              }
+            }
+          }
           return null;
         } else {
           // If you return null then an error will be displayed advising the user to check their details.
@@ -60,7 +59,7 @@ export const authOptions: AuthOptions = {
     },
   },
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/login",
     signOut: "/auth/signout",
     error: "/auth/error", // Error code passed in query string as ?error=
     verifyRequest: "/auth/verify-request", // (used for check email message)
